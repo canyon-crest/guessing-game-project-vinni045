@@ -1,7 +1,7 @@
 // time
 const date = document.getElementById('date');
 const correntTime = document.getElementById('currentTime');
-let name = document.getElementById("name").placeholder = "What is your name?";
+let names = document.getElementById("names"); 
 
 date.textContent = time();
 currentTime.textContent = now(); 
@@ -89,28 +89,28 @@ function play(){
 function makeGuess(){
     let userGuess = parseInt(guess.value);
     if (isNaN(userGuess)){
-        msg.textContent = 'INVALID, please guess a number';
+        msg.textContent = 'INVALID, please guess a number ' + names.value + '!';
         return;
     }
     else if (userGuess<1){
-        msg.textContent = 'Not a valid number'
+        msg.textContent = 'Not a valid number ' + names.value;
         return;
     }
     else if (userGuess>level){
-        msg.textContent = 'Not a valid number'
+        msg.textContent = 'Not a valid number ' + names.value;
         return;
     }
     score++;
     if (userGuess==answer){
-        msg.textContent = 'Good job! You are correct, and you took ' + score + ' tries.';
+        msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries.';
         reset();
         updateScore();
     }
     else if (userGuess>answer){
-        msg.textContent = 'Too high! Guess again';
+        msg.textContent = 'Too high! Guess again ' + names.value ;
     }
     else if (userGuess<answer && userGuess>0){
-        msg.textContent = 'Too low! Guess again';
+        msg.textContent = 'Too low! Guess again ' + names.value;
     }
 }
 function reset(){
