@@ -1,5 +1,10 @@
 // time
+const date = document.getElementById('date');
+const correntTime = document.getElementById('currentTime');
+
 date.textContent = time();
+currentTime.textContent = now();
+
 
 //global variables/constants
 let score, answer, level;
@@ -13,8 +18,32 @@ guessBtn.addEventListener('click',makeGuess);
 function time(){
     let d = new Date();
     //concatenate the date and time
-    let str = d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear();
-    return str;
+    let dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let day = dayArr[d.getDay()];
+    let str = d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear() + ' -- ' + day;
+    return str;   
+}
+function now(){
+    let a = new Date();
+    let hours = a.getHours();
+    let minutes = a.getMinutes();
+    let ampm = '';
+    if (hours>=12){
+        ampm = 'PM';
+    }
+    else{
+        ampm = 'AM';
+    }
+    if (hours >12){
+        hours-= 12;
+    }
+    else if (hours ==0){
+        hours = 12;
+    }
+    if (minutes<10){
+        minutes = '0'+ minutes;
+    }
+    return hours + ":" + minutes + ' ' + ampm;
 }
 function play(){
     playBtn.disabled = true;
