@@ -60,16 +60,22 @@ function now(){
     if (minutes<10){
         minutes = '0'+ minutes;
     }
-    const currentTime = document.getElementById('currentTime'); // make sure you have <p id="currentTime"></p>
-    setInterval(function() {
-    currentTime.textContent = now();
-    }, 1000);
     if (seconds < 10){
         seconds = '0' + seconds;
     }
+    const currentTime = document.getElementById('currentTime'); // make sure you have <p id="currentTime"></p>
+    // setInterval(function() {
+    // currentTime.textContent = now();
+    // }, 1000);
+    // if (seconds < 10){
+    //     seconds = '0' + seconds;
+    // }
     return hours + ":" + minutes + ':' + seconds + ' ' + ampm;
-    
 }
+setInterval(function() {
+    currentTime.textContent = now();
+}, 1000);
+    
 function play(){
     playBtn.disabled = true;
     guessBtn.disabled = false;
