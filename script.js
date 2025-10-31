@@ -1,11 +1,10 @@
 // time
 const date = document.getElementById('date');
 const correntTime = document.getElementById('currentTime');
+let name = document.getElementById("name").placeholder = "What is your name?";
 
 date.textContent = time();
-currentTime.textContent = now();
-
-
+currentTime.textContent = now(); 
 //global variables/constants
 let score, answer, level;
 const levelArr = document.getElementsByName('level');
@@ -15,18 +14,36 @@ const scoreArr = []; //the array itself is constant, but the stuff inside of it 
 playBtn.addEventListener('click',play);
 guessBtn.addEventListener('click',makeGuess);
 
+
 function time(){
     let d = new Date();
     //concatenate the date and time
     let dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let monthArr = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     let day = dayArr[d.getDay()];
-    let str = d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear() + ' -- ' + day;
-    return str;   
+    let monthName = monthArr[d.getMonth()];
+    let dateNum = d.getDate();
+    let ending = ''; 
+    if (dateNum ==1 || dateNum ==21|| dateNum == 31){
+        ending = 'st';
+    }
+    else if (dateNum == 2 || dateNum == 22){
+        ending = 'nd';
+    }
+    else if (dateNum == 3 || dateNum == 23){
+        ending = 'rd';
+    }
+    else{
+        ending = 'th';
+    }
+    let str = monthName + ' ' + dateNum + ending + ', ' + d.getFullYear() + ' -- ' + day;
+    return str;
 }
 function now(){
     let a = new Date();
     let hours = a.getHours();
     let minutes = a.getMinutes();
+    let seconds = a.getSeconds();
     let ampm = '';
     if (hours>=12){
         ampm = 'PM';
@@ -43,7 +60,15 @@ function now(){
     if (minutes<10){
         minutes = '0'+ minutes;
     }
-    return hours + ":" + minutes + ' ' + ampm;
+    const currentTime = document.getElementById('currentTime'); // make sure you have <p id="currentTime"></p>
+    setInterval(function() {
+    currentTime.textContent = now();
+    }, 1000);
+    if (seconds < 10){
+        seconds = '0' + seconds;
+    }
+    return hours + ":" + minutes + ':' + seconds + ' ' + ampm;
+    
 }
 function play(){
     playBtn.disabled = true;
