@@ -1,6 +1,6 @@
 // time
 const date = document.getElementById('date');
-const correntTime = document.getElementById('currentTime');
+const currentTime = document.getElementById('currentTime');
 let names = document.getElementById("names"); 
 
 date.textContent = time();
@@ -13,7 +13,6 @@ const scoreArr = []; //the array itself is constant, but the stuff inside of it 
 //event listeners
 playBtn.addEventListener('click',play);
 guessBtn.addEventListener('click',makeGuess);
-
 
 function time(){
     let d = new Date();
@@ -63,7 +62,6 @@ function now(){
     if (seconds < 10){
         seconds = '0' + seconds;
     }
-    const currentTime = document.getElementById('currentTime'); // make sure you have <p id="currentTime"></p>
     // setInterval(function() {
     // currentTime.textContent = now();
     // }, 1000);
