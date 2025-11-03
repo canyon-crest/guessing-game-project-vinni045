@@ -13,6 +13,7 @@ const scoreArr = []; //the array itself is constant, but the stuff inside of it 
 //event listeners
 playBtn.addEventListener('click',play);
 guessBtn.addEventListener('click',makeGuess);
+giveUpBtn.addEventListener('click',giveUp);
 
 function time(){
     let d = new Date();
@@ -77,6 +78,7 @@ setInterval(function() {
 function play(){
     playBtn.disabled = true;
     guessBtn.disabled = false;
+    giveUpBtn.disabled = false;
     guess.disabled = false;
     for(let i = 0; i<levelArr.length; i++){
         levelArr[i].disabled = true;
@@ -105,10 +107,12 @@ function makeGuess(){
         return;
     }
     score++;
+    
     if (userGuess==answer){
-        msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries.';
+        msg.textContent = 'Good job' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries.';
         reset();
         updateScore();
+        giveUpBtn.disabled = true;
     }
     else if (userGuess>answer){
         msg.textContent = 'Too high! Guess again ' + names.value ;
@@ -123,6 +127,7 @@ function reset(){
     guess.placeholder = '';
     guess.disabled = true;
     playBtn.disabled = false;
+    
     for(let i = 0; i<levelArr.length; i++){
         levelArr[i].disabled = false;
     }
@@ -143,4 +148,12 @@ function updateScore(){
     }
     let avg = sum/(scoreArr.length);
     avgScore.textContent = "Average Score: " + avg.toFixed(2);
+
+}
+function giveUp(){
+    giveUpBtn.disabled = true;
+    msg.textContent = 'The correct answer was ' + answer + '. Better luck next time ' + names.value + '!';
+    score = Number(level);
+    reset();
+    updateScore();
 }
