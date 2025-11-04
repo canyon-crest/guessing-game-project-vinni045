@@ -107,13 +107,58 @@ function makeGuess(){
         return;
     }
     score++;
-    
+    // good bad ok and score//
     if (userGuess==answer){
-        msg.textContent = 'Good job' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries.';
+        //level 3//
+        if (level==3 && score==1){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is great!';
+        }
+        else if (level==3 && score ==2){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is good.';
+        }
+        else if (level==3 && score >2){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is bad.';
+        }
+        //level 100//
+        if (level==100 && score<=3){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is excellent!';
+        }
+        else if (level==100 && score==4 || score==5){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is good.';
+        }
+        else if (level==100 && score==6){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is ok.';
+        }
+        else if (level==100 && score>=7){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is bad.';
+        }
+        //level 10//
+        if (level==10 && score==1){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is excellent!';
+        }
+        else if (level==10 && score==2){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is great.';
+        }
+        else if (level==10 && score==3){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is good.';
+        }
+        else if (level==10 && score==4){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is ok.';
+        }
+        else if (level==10 && score>4){
+            msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is bad.';
+        }
+        
         reset();
         updateScore();
         giveUpBtn.disabled = true;
     }
+    // if (userGuess==answer){
+    //     msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries.';
+    //     reset();
+    //     updateScore();
+    //     giveUpBtn.disabled = true;
+    // }
     else if (userGuess>answer){
         msg.textContent = 'Too high! Guess again ' + names.value ;
     }
@@ -143,7 +188,7 @@ function updateScore(){
     for (let i = 0; i<scoreArr.length;i++){
         sum+=scoreArr[i];
         if (i < lb.length){
-            lb[i].textContent = scoreArr[i];
+            lb[i].textContent = scoreArr[i] + ' - ' + names.value;
         }
     }
     let avg = sum/(scoreArr.length);
