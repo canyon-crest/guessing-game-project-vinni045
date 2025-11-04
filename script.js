@@ -2,6 +2,7 @@
 const date = document.getElementById('date');
 const currentTime = document.getElementById('currentTime');
 let names = document.getElementById("names"); 
+let timer = document.getElementById('timer'); //timer
 
 date.textContent = time();
 currentTime.textContent = now(); 
@@ -14,6 +15,7 @@ const scoreArr = []; //the array itself is constant, but the stuff inside of it 
 playBtn.addEventListener('click',play);
 guessBtn.addEventListener('click',makeGuess);
 giveUpBtn.addEventListener('click',giveUp);
+playBtn.addEventListener('click',startTimer); //timer 
 
 function time(){
     let d = new Date();
@@ -76,10 +78,20 @@ setInterval(function() {
 }, 1000);
     
 function play(){
+    
     playBtn.disabled = true;
     guessBtn.disabled = false;
     giveUpBtn.disabled = false;
     guess.disabled = false;
+    if (names.value == ''){
+        msg.textContent = 'Please enter your name to play!';
+        playBtn.disabled = false;
+        guessBtn.disabled = true;
+        giveUpBtn.disabled = true;
+        guess.disabled = true;
+        return;
+    }
+    names.value = names.value.charAt(0).toUpperCase() + names.value.substring(1).toLowerCase(); //capitalize first letter of name
     for(let i = 0; i<levelArr.length; i++){
         levelArr[i].disabled = true;
         if (levelArr[i].checked){
@@ -188,11 +200,12 @@ function updateScore(){
     for (let i = 0; i<scoreArr.length;i++){
         sum+=scoreArr[i];
         if (i < lb.length){
-            lb[i].textContent = scoreArr[i] + ' - ' + names.value;
+            lb[i].textContent = scoreArr[i];
         }
     }
     let avg = sum/(scoreArr.length);
     avgScore.textContent = "Average Score: " + avg.toFixed(2);
+
 
 }
 function giveUp(){
@@ -201,4 +214,8 @@ function giveUp(){
     score = Number(level);
     reset();
     updateScore();
+}
+function startTimer(){
+    //
+    
 }
