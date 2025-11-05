@@ -158,7 +158,7 @@ function makeGuess(){
         if (level==100 && score<=3){
             msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is excellent!';
         }
-        else if (level==100 && score==4 || score==5){
+        else if (level==100 && (score==4 || score==5)){
             msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is good.';
         }
         else if (level==100 && score==6){
@@ -199,11 +199,12 @@ function makeGuess(){
 
     currentStreak++; // increment streak
 streakDisplay.textContent = "Current Win Streak: " + currentStreak;
-// if (level == 3) leaderboard3.push(score);
-// else if (level == 10) leaderboard10.push(score);
-// else if (level == 100) leaderboard100.push(score);
+if (level == 3) leaderboard3.push(score);
+else if (level == 10) leaderboard10.push(score);
+else if (level == 100) leaderboard100.push(score);
 
-// updateLeaderboards();
+updateLeaderboards();
+clearInterval(timerInterval);
 
         reset();
         updateScore();
@@ -227,12 +228,8 @@ streakDisplay.textContent = "Current Win Streak: " + currentStreak;
         }
         msg.textContent = hint + ' Try again, ' + names.value + '!';
     }
-    if (level == 3) leaderboard3.push(score);
-else if (level == 10) leaderboard10.push(score);
-else if (level == 100) leaderboard100.push(score);
-
-updateLeaderboards();
-    clearInterval(timerInterval);
+    
+    
 
 
 }
