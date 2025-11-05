@@ -310,15 +310,10 @@ function updateLeaderboards() {
     leaderboard10.sort((a,b) => a-b);
     leaderboard100.sort((a,b) => a-b);
 
-    // The divs just stay as headings
-    document.getElementById('lb3').textContent = "Easy: ";
-    document.getElementById('lb10').textContent = "Medium:";
-    document.getElementById('lb100').textContent = "Hard:";
-
-    // Update <ol> top 3 scores
-    const ol3 = document.getElementById('lb3').nextElementSibling.children;
-    const ol10 = document.getElementById('lb10').nextElementSibling.children;
-    const ol100 = document.getElementById('lb100').nextElementSibling.children;
+    // Update <ol> top 3 scores for each level
+    const ol3 = document.getElementById('list3').children;
+    const ol10 = document.getElementById('list10').children;
+    const ol100 = document.getElementById('list100').children;
 
     for (let i = 0; i < 3; i++) {
         ol3[i].textContent = leaderboard3[i] !== undefined ? leaderboard3[i] + " tries" : '___';
