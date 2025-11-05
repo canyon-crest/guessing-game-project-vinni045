@@ -3,6 +3,9 @@ const date = document.getElementById('date');
 const currentTime = document.getElementById('currentTime');
 let names = document.getElementById("names"); 
 let timer = document.getElementById('timer'); //timer
+let startTime;
+let roundTimes = [];
+let timerInterval;
 
 date.textContent = time();
 currentTime.textContent = now(); 
@@ -15,7 +18,7 @@ const scoreArr = []; //the array itself is constant, but the stuff inside of it 
 playBtn.addEventListener('click',play);
 guessBtn.addEventListener('click',makeGuess);
 giveUpBtn.addEventListener('click',giveUp);
-playBtn.addEventListener('click',startTimer); //timer 
+
 
 function time(){
     let d = new Date();
@@ -102,6 +105,7 @@ function play(){
     msg.textContent = 'Guess a number between 1-' + level;
     guess.placeholder = answer; //shows preview of ansewr ( in grey) // change later
     score = 0;
+    startTimer();
 
 }
 function makeGuess(){
@@ -160,6 +164,19 @@ function makeGuess(){
         else if (level==10 && score>4){
             msg.textContent = 'Good job ' + names.value + '! '+ 'You are correct, and you took ' + score + ' tries. Your score is bad.';
         }
+
+        let endTime = new Date().getTime();
+    let roundTime = Math.floor((endTime - startTime)/1000); // in seconds
+    roundTimes.push(roundTime);
+
+    // display fastest win
+    let fastest = Math.min(...roundTimes);
+    fastestWin.textContent = "Your Fastest Win: " + fastest + "s";
+
+    // display average time
+    let sumTime = roundTimes.reduce((a,b) => a+b, 0);
+    let avgTimeVal = (sumTime / roundTimes.length).toFixed(1);
+    avgTime.textContent = "Average Time: " + avgTimeVal + "s";
         
         reset();
         updateScore();
@@ -171,12 +188,26 @@ function makeGuess(){
     //     updateScore();
     //     giveUpBtn.disabled = true;
     // }
-    else if (userGuess>answer){
-        msg.textContent = 'Too high! Guess again ' + names.value ;
+    else {
+        let diff = Math.abs(userGuess - answer);
+        let maxDiff = level; // highest possible difference
+        let percent = (diff / maxDiff) * 100;
+        let hint = '';
+
+        if (percent >= 60){ 
+            hint = 'You are cold!';
+        }
+        else if (percent >= 30) {
+            hint = 'You are warm!';
+        }
+        else {
+            hint = 'You are hot!';
+        }
+        msg.textContent = hint + ' Try again, ' + names.value + '!';
     }
-    else if (userGuess<answer && userGuess>0){
-        msg.textContent = 'Too low! Guess again ' + names.value;
-    }
+    clearInterval(timerInterval);
+
+
 }
 function reset(){
     guessBtn.disabled = true;
@@ -212,10 +243,31 @@ function giveUp(){
     giveUpBtn.disabled = true;
     msg.textContent = 'The correct answer was ' + answer + '. Better luck next time ' + names.value + '!';
     score = Number(level);
+    let endTime = new Date().getTime();
+let roundTime = Math.floor((endTime - startTime)/1000);
+roundTimes.push(roundTime);
+
+// update fastest and average times
+let fastest = Math.min(...roundTimes);
+fastestWin.textContent = "Your Fastest Win: " + fastest + "s";
+
+let sumTime = roundTimes.reduce((a,b) => a+b, 0);
+let avgTimeVal = (sumTime / roundTimes.length).toFixed(1);
+avgTime.textContent = "Average Time: " + avgTimeVal + "s";
+clearInterval(timerInterval);
+
     reset();
     updateScore();
 }
 function startTimer(){
-    //
-    
+     startTime = new Date().getTime(); // capture start time
+
+    // clear any previous interval
+    if(timerInterval) clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+        let currentTime = new Date().getTime();
+        let seconds = Math.floor((currentTime - startTime)/1000);
+        timer.textContent = "Timer: " + seconds + "s";
+    }, 1000);
 }
