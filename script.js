@@ -193,28 +193,30 @@ function makeGuess(){
     fastestWin.textContent = "Your Fastest Win: " + fastest + "s";
 
     // display average time
-    let sumTime = roundTimes.reduce((a,b) => a+b, 0);
-    let avgTimeVal = (sumTime / roundTimes.length).toFixed(1);
+    let avgTimeVal = (roundTimes.reduce((a,b) => a+b, 0) / roundTimes.length).toFixed(1);
     avgTime.textContent = "Average Time: " + avgTimeVal + "s";
 
     currentStreak++; // increment streak
 streakDisplay.textContent = "Current Win Streak: " + currentStreak;
-if (level == 3) leaderboard3.push(score);
-else if (level == 10) leaderboard10.push(score);
-else if (level == 100) leaderboard100.push(score);
 
-updateLeaderboards();
-clearInterval(timerInterval);
+if (level === 3) leaderboard3.push(score);
+        else if (level === 10) leaderboard10.push(score);
+        else if (level === 100) leaderboard100.push(score);
+        updateLeaderboards();
 
+        // Stop timer
+        clearInterval(timerInterval);
+
+        // Reset for next round
         reset();
         updateScore();
         giveUpBtn.disabled = true;
+
     }
    
     else {
-        let diff = Math.abs(userGuess - answer);
-        let maxDiff = level; // highest possible difference
-        let percent = (diff / maxDiff) * 100;
+        let diff = Math.abs(userGuess - answer); 
+        let percent = (diff / level) * 100;
         let hint = '';
 
         if (percent >= 60){ 
@@ -228,7 +230,6 @@ clearInterval(timerInterval);
         }
         msg.textContent = hint + ' Try again, ' + names.value + '!';
     }
-    
     
 
 
